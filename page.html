@@ -76,7 +76,7 @@
 <body>
     <div id="quiz-container">
 
-        <div id="add-question-form">
+        <div id="add-question-form" style="display: block;">
             <h2>Add New Question</h2>
             <label for="new-question">Question:</label>
             <input type="text" id="new-question" placeholder="Enter your question" maxlength="100">
@@ -94,14 +94,7 @@
     </div>
 
     <script>
-        var isFirstTime = localStorage.getItem('isFirstTime');
-
-        if (isFirstTime === null || isFirstTime === "true") {
-            // Set flag to false after the first visit
-            localStorage.setItem('isFirstTime', 'false');
-            // Show the add question form
-            document.getElementById("add-question-form").style.display = "block";
-        }
+        var isFirstTime = true;
 
         function submitQuiz() {
             var questionsCount = document.querySelectorAll('.question').length;
@@ -118,7 +111,13 @@
 
         function toggleAddQuestionForm() {
             var addQuestionForm = document.getElementById("add-question-form");
-            addQuestionForm.style.display = (addQuestionForm.style.display === "none") ? "block" : "none";
+
+            if (isFirstTime) {
+                addQuestionForm.style.display = "block";
+                isFirstTime = false;
+            } else {
+                addQuestionForm.style.display = (addQuestionForm.style.display === "none") ? "block" : "none";
+            }
         }
 
         function addNewQuestion() {
