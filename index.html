@@ -34,13 +34,21 @@
         }
 
         button {
-            background-color: #4caf50;
+            background-color: #6fa4e5;
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #5085c4; /* Darker shade on hover */
+        }
+
+        button:active {
+            background-color: #405e8a; /* Even darker shade when pressed */
         }
 
         #add-question-form {
@@ -48,8 +56,19 @@
             margin-top: 20px;
         }
 
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
         input[type="text"], input[type="radio"] {
-            margin-right: 5px;
+            width: calc(100% - 10px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
 
         .delete-button {
@@ -69,7 +88,7 @@
         }
 
         #bottom-buttons button {
-            margin: 0 10px;
+            margin: 0 3px;
         }
     </style>
 </head>
@@ -79,10 +98,10 @@
         <div id="add-question-form" style="display: block;">
             <h2>Add New Question</h2>
             <label for="new-question">Question:</label>
-            <input type="text" id="new-question" placeholder="Enter your question" maxlength="100">
+            <input type="text" id="new-question" placeholder="Enter your question" maxlength="100"><br>
 
-            <label for="new-options">Options (comma-separated, at least 2):</label>
-            <input type="text" id="new-options" placeholder="Option 1, Option 2, Option 3" maxlength="100">
+            <label for="new-options">Options (at least 2):</label>
+            <input type="text" id="new-options" placeholder="Option 1, Option 2, Option 3, Option 4" maxlength="100">
 
             <button type="add" onclick="addNewQuestion()">Add Question</button>
         </div>
