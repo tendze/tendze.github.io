@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Maker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 15px;
+            word-wrap: break-word; /* Added this property for text wrapping */
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .option {
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #add-question-form {
+            display: none;
+            margin-top: 20px;
+        }
+
+        input[type="text"], input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .delete-button {
+            background-color: #ff5252;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        /* Center the buttons at the bottom */
+        #bottom-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #bottom-buttons button {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+
+        <div id="add-question-form" style="display: block;">
+            <h2>Add New Question</h2>
+            <label for="new-question">Question:</label>
+            <input type="text" id="new-question" placeholder="Enter your question" maxlength="100">
+
+            <label for="new-options">Options (comma-separated, at least 2):</label>
+            <input type="text" id="new-options" placeholder="Option 1, Option 2, Option 3" maxlength="100">
+
+            <button type="add" onclick="addNewQuestion()">Add Question</button>
+        </div>
+
+        <div id="bottom-buttons">
+            <button type="submit" onclick="submitQuiz()">Submit Quiz</button>
+            <button onclick="toggleAddQuestionForm()">Add New Question</button>
+        </div>
+    </div>
+
+    <script>
+        var isFirstTime = localStorage.getItem('isFirstTime');
+    
+        if (isFirstTime === null || isFirstTime === "true") {
+            // Set flag to false after the first visit
+            localStorage.setItem('isFirstTime', 'false');
+            isFirstTime = true; // Add this line
+        }
+    
+        function submitQuiz() {
+            var questionsCount = document.querySelectorAll('.question').length;
+    
+            if (questionsCount > 0 && validateQuiz()) {
+                // You can add logic here to collect and process the user's answers
+                alert("Quiz submitted!");
+            } else if (questionsCount === 0) {
+                alert("Please add at least one question before submitting the quiz.");
+            } else {
+                alert("Not all questions have the correct answer selected, or there are invalid questions.");
+            }
+        }
+    
+        function toggleAddQuestionForm() {
+            var addQuestionForm = document.getElementById("add-question-form");
+            var addQuestionButton = document.getElementById("add-question-button");
+    
+            if (isFirstTime) {
+                addQuestionForm.style.display = "block";
+                isFirstTime = false;
+            } else {
+                addQuestionForm.style.display = (addQuestionForm.style.display === "none") ? "block" : "none";
+            }
+    
+            // Toggle button text
+            addQuestionButton.innerText = (addQuestionButton.innerText === "Add New Question") ? "Cancel Adding New Question" : "Add New Question";
+        }
+    
+        function addNewQuestion() {
+            var questionContainer = document.getElementById("quiz-container");
+            var newQuestion = document.createElement("div");
+    
+            var questionText = document.getElementById("new-question").value.trim();
+            var optionsText = document.getElementById("new-options").value.split(',');
+    
+            // Check if question is non-empty and does not exceed 100 characters
+            if (questionText === "" || questionText.length > 100) {
+                alert("Please enter a non-empty question with at most 100 characters.");
+                return;
+            }
+    
+            // Check if there are at least 2 options
+            if (optionsText.length < 2) {
+                alert("Please enter at least two options for the question.");
+                return;
+            }
+    
+            // Check if each option does not exceed 100 characters
+            for (var i = 0; i < optionsText.length; i++) {
+                if (optionsText[i].trim().length > 100) {
+                    alert("Each option should have at most 100 characters.");
+                    return;
+                }
+    
+                // Check if each variant does not exceed 30 characters
+                if (optionsText[i].trim().length > 30) {
+                    alert("Each variant should have at most 30 characters.");
+                    return;
+                }
+            }
+    
+            newQuestion.className = "question";
+            newQuestion.innerHTML = "<h2>" + questionText + "</h2>";
+    
+            var optionsList = document.createElement("ul");
+            optionsList.className = "options";
+    
+            for (var i = 0; i < optionsText.length; i++) {
+                var optionItem = document.createElement("li");
+                optionItem.className = "option";
+                optionItem.innerHTML = "<input type='radio' name='q" + (document.querySelectorAll('.question').length + 1) + "' value='" + optionsText[i].trim() + "'>" + optionsText[i].trim();
+                optionsList.appendChild(optionItem);
+            }
+    
+            newQuestion.appendChild(optionsList);
+    
+            var deleteButton = document.createElement("button");
+            deleteButton.className = "delete-button";
+            deleteButton.innerHTML = "Delete";
+            deleteButton.onclick = function() {
+                deleteQuestion(this);
+            };
+    
+            newQuestion.appendChild(deleteButton);
+    
+            questionContainer.insertBefore(newQuestion, document.getElementById("add-question-form"));
+    
+            // Clear the form
+            document.getElementById("new-question").value = "";
+            document.getElementById("new-options").value = "";
+    
+            // Hide the form after adding a question
+            toggleAddQuestionForm();
+        }
+    
+        function deleteQuestion(button) {
+            var question = button.parentNode;
+            question.parentNode.removeChild(question);
+        }
+    
+        function validateQuiz() {
+            var questions = document.querySelectorAll('.question');
+    
+            for (var i = 0; i < questions.length; i++) {
+                var options = questions[i].querySelectorAll('input[type="radio"]');
+                var answerSelected = false;
+    
+                for (var j = 0; j < options.length; j++) {
+                    if (options[j].checked) {
+                        answerSelected = true;
+                        break;
+                    }
+                }
+    
+                if (!answerSelected) {
+                    return false; // At least one question doesn't have a selected answer
+                }
+            }
+    
+            return true; // All questions have a selected answer
+        }
+    </script>
+    
+</body>
+</html>
