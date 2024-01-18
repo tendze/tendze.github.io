@@ -3,29 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Maker</title>
+    <title>Конструктор</title>
     <link rel="stylesheet" href="style.css"/>
     <script src="app.js"></script>
 </head>
-<body>
-    <div id="quiz-container">
+<body>  
+    
 
-        <div id="add-question-form" style="display: block;">
-            <h2>Add New Question</h2>
-            <label for="new-question">Question:</label>
-            <input type="text" id="new-question" placeholder="Enter your question" maxlength="100"><br>
+    <div id="container">
 
-            <label for="new-options">Options (at least 2 and most of 4):</label>
-            <input type="text" id="new-options" placeholder="Option 1, Option 2, Option 3, Option 4" maxlength="100">
-
-            <button type="add" onclick="addNewQuestion()">Add Question</button>
+        <div id="title" class="name-input">
+            <h2>Придумайте название</h2>
+            <input type="text" id="title-input" placeholder="Введите название">
         </div>
 
-        <div id="bottom-buttons">
-            <button type="submit" onclick="submitQuiz()">Submit Quiz</button>
-            <button id="add-question-button" onclick="toggleAddQuestionForm()">Cancel adding new question</button>
+        <div id="add-question-form" class="add-question" style="display: block;">
+            <h2>Добавить новый вопрос</h2>
+            <label for="new-question">Текст вопроса:</label>
+            <input type="text" id="new-question" placeholder="Введите ваш вопрос" maxlength="100"><br>
+
+            <label for="new-options">Варианты ответов (миниум 2, но не больше 4):</label>
+            <input type="text" id="new-options" placeholder="Вариант1; Вариант2; Вариант3; Вариант4" maxlength="100">
+
+            <button type="add" onclick="addNewQuestion()">Добавить вопрос</button>
+        </div>
+
+        <div id="bottom-buttons" style="display: block;">
+            <button type="submit" onclick="submit()">Отправить</button>
+            <button id="add-question-button" onclick="toggleAddQuestionForm()">Отменить добавление нового вопроса</button>
         </div>
     </div>
-    
 </body>
 </html>
