@@ -1,4 +1,5 @@
-import "https://telegram.org/js/telegram-web-app.js";
+let tg = window.Telegram.WebApp;
+tg.expand();
 
 var isFirstTime = localStorage.getItem('isFirstTime');
     
@@ -9,11 +10,40 @@ if (isFirstTime === null || isFirstTime === "true") {
 }
 
 function sendDataToTg() {
-    let tg = window.Telegram.WebApp;
+    var data = new Map();
+
     var name = document.getElementById("title-input").value
+    data["name"] = name
+    var questionList = []
+    var questions = document.querySelectorAll('.question');
+    for (var i = 0; i < questions.length; i++) {
+        var options = questions[i].querySelectorAll('input[type="checkbox"]');
+        var question = questions[i].querySelector("h2").textContent
+        var considerPartialAnswers = options[0].checked
+        var variants = []
+        var right_variants = []
+        
+        for (var j = 1; j < options.length; j++) {
+            variants.push(options[j].value)
+            if (options[j].checked) {
+                right_variants.push(options[j].value)
+            }
+        }
+        
+        questionList.push(
+            {
+                "question": question,
+                "variants": variants,
+                "right_variants": right_variants,
+                "consider_partial_answers": considerPartialAnswers ? 1 : 0
+            }
+        )
+    }
+    data["questions"] = questionList
+    tg.sendData(JSON.stringify(data))
 }
 
-function submit() {
+function submit() { 
     var questionsCount = document.querySelectorAll('.question').length;
 
     if (questionsCount > 0 && validateQuestion()) {
