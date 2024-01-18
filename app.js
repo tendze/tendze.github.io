@@ -41,6 +41,7 @@ function sendDataToTg() {
     }
     data["questions"] = questionList
     tg.sendData(JSON.stringify(data))
+    tg.close()
 }
 
 function submit() { 
