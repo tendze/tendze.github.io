@@ -4,7 +4,7 @@ body {
     background-color: #f4f4f4;
 }
 
-#quiz-container {
+#container {
     max-width: 600px;
     margin: auto;
     background-color: #fff;
@@ -14,6 +14,25 @@ body {
 }
 
 .question {
+    position: relative;
+    margin-bottom: 15px;
+    word-wrap: break-word;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.name-input {
+    position: relative;
+    margin-bottom: 15px;
+    word-wrap: break-word;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.add-question {
+    position: relative;
     margin-bottom: 15px;
     word-wrap: break-word;
     background-color: #f9f9f9;
@@ -28,6 +47,10 @@ body {
 
 .option {
     margin-bottom: 10px;
+}
+
+.checkbox {
+    margin-left: 10px;
 }
 
 button {
@@ -69,6 +92,7 @@ input[type="text"] {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+    resize: both;
 }
 
 /* Center the buttons at the bottom */
@@ -78,5 +102,71 @@ input[type="text"] {
 }
 
 #bottom-buttons button {
-    margin: 0 3px;
+    margin: 0 5px;
+}
+
+.switch-toggle {
+    position: relative;
+    display: inline-block;
+    width: 40px;  /* Adjusted width */
+    height: 20px; /* Adjusted height */
+    top: -10px;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 20px; /* Adjusted border radius */
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px; /* Adjusted height */
+    width: 16px; /* Adjusted width */
+    left: 2px;   /* Adjusted left position */
+    bottom: 2px; /* Adjusted bottom position */
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(20px); /* Adjusted translateX value */
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+}
+
+/* Adjusted style for the close button */
+.close-button {
+    position: absolute;
+    top: 0px;
+    right: 2px;
+    background: #ff5252;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 1; /* Ensure the button is above other elements */
+}
+
+.close-button:hover {
+    background: #c50f0f;
 }
