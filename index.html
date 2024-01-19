@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Конструктор</title>
     <link rel="stylesheet" href="style.css"/>
-    <script src="app.js"></script>
 </head>
 <body>  
     <div id="container">
@@ -31,24 +30,7 @@
             <button id="add-question-button" onclick="toggleAddQuestionForm()">Отменить добавление нового вопроса</button>
         </div>
     </div>
-
-    <script>
-        async function loadExternalScript(url) {
-            const script = document.createElement('script');
-            script.src = url;
-            script.async = true;
-            document.head.appendChild(script);
-            await new Promise((resolve) => script.addEventListener('load', resolve));
-            return script;
-        }
-
-        loadExternalScript('https://telegram.org/js/telegram-web-app.js')
-            .then((script) => {
-                console.log('External script loaded:', script);
-            })
-            .catch((error) => {
-                console.error('Error loading external script:', error);
-        });
-    </script>
 </body>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="app.js"></script>
 </html>
