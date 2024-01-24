@@ -50,6 +50,7 @@ function submit() {
     if (questionsCount > 0 && validateQuestion()) {
         // You can add logic here to collect and process the user's answers
         alert("Отправлено!");
+        sendDataToTg()
     } else if (questionsCount === 0) {
         alert("Пожалуйста, добавьте хотя бы один вопрос");
     } else if (!validateName()) {
@@ -57,7 +58,6 @@ function submit() {
     } else {
         alert("Не у всех вопросов отмечены варианты ответов");
     } 
-    sendDataToTg()
 }
 
 function toggleAddQuestionForm() {
