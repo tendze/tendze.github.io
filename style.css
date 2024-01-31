@@ -58,7 +58,7 @@ button {
     color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     margin-top: 10px;
     transition: background-color 0.3s ease, transform 0.3s ease;
@@ -102,7 +102,7 @@ input[type="text"] {
 }
 
 #bottom-buttons button {
-    margin: 0 5px;
+    margin: 0 10px;
 }
 
 .switch-toggle {
