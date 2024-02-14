@@ -58,7 +58,7 @@ button {
     color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: 2px;
     cursor: pointer;
     margin-top: 10px;
     transition: background-color 0.3s ease, transform 0.3s ease;
